@@ -1,0 +1,29 @@
+# .NET Build Outputs
+bin/
+obj/
+*.user
+
+# Secrets — NEVER commit these
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
+!appsettings.Example.json
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+
+# NuGet
+*.nupkg
+*.nuget.props
+*.nuget.targets
+
+# OS
+.DS_Store
+Thumbs.db

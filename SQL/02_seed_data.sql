@@ -3,20 +3,20 @@ GO
 
 -- ============================================================================
 -- 1. SEED: USUARIOS (BCrypt Hash: Factor 11)
--- Admin123* -> $2a$11$eWkZpCkgHvh7FpvyqAUpseQY5uE.yWd9e36Feqr0Z9Nl7xS9zO4eO
--- User123*  -> $2a$11$c8K8gRk5AOmgB.0uVlJ0ceGf97W2U5t0O6Uv7a7R7ZzL9T2g1MxeS
+-- Admin123* -> $2a$11$Tst7APCt6rZZzI9TT657o.QL2ATm/oLQVoi9BDE/6eSRujHLO4Rdi
+-- User123*  -> $2a$11$P8TNRSEk2oPndF/Nh8JguOg270olM5J8Lb1zllqDy1STmktozqzXq
 -- ============================================================================
 
 IF NOT EXISTS (SELECT 1 FROM dbo.Usuarios WHERE Email = 'admin@consultoria.local')
 BEGIN
     INSERT INTO dbo.Usuarios (Email, PasswordHash, Rol, Activo, FechaCreacion)
-    VALUES ('admin@consultoria.local', '$2a$11$eWkZpCkgHvh7FpvyqAUpseQY5uE.yWd9e36Feqr0Z9Nl7xS9zO4eO', 'Admin', 1, SYSUTCDATETIME());
+    VALUES ('admin@consultoria.local', '$2a$11$Tst7APCt6rZZzI9TT657o.QL2ATm/oLQVoi9BDE/6eSRujHLO4Rdi', 'Admin', 1, SYSUTCDATETIME());
 END
 
 IF NOT EXISTS (SELECT 1 FROM dbo.Usuarios WHERE Email = 'user@consultoria.local')
 BEGIN
     INSERT INTO dbo.Usuarios (Email, PasswordHash, Rol, Activo, FechaCreacion)
-    VALUES ('user@consultoria.local', '$2a$11$c8K8gRk5AOmgB.0uVlJ0ceGf97W2U5t0O6Uv7a7R7ZzL9T2g1MxeS', 'User', 1, SYSUTCDATETIME());
+    VALUES ('user@consultoria.local', '$2a$11$P8TNRSEk2oPndF/Nh8JguOg270olM5J8Lb1zllqDy1STmktozqzXq', 'User', 1, SYSUTCDATETIME());
 END
 GO
 
