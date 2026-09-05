@@ -17,6 +17,7 @@ const initialFormData = {
   emailCorporativo: '',
   areaEspecializacion: '',
   tarifaHora: '',
+  cantidadProyectosActivos: 0,
   activo: true,
 };
 
@@ -81,6 +82,7 @@ export const Consultores = () => {
       emailCorporativo: consultor.emailCorporativo || '',
       areaEspecializacion: consultor.areaEspecializacion || '',
       tarifaHora: consultor.tarifaHora || '',
+      cantidadProyectosActivos: consultor.cantidadProyectosActivos ?? 0,
       activo: consultor.activo !== undefined ? consultor.activo : true,
     });
     setFormErrors({});
@@ -104,6 +106,10 @@ export const Consultores = () => {
     if (!formData.tarifaHora || Number(formData.tarifaHora) <= 0) {
       errors.tarifaHora = 'La tarifa por hora debe ser un valor mayor a cero.';
     }
+    const proyectos = Number(formData.cantidadProyectosActivos);
+    if (isNaN(proyectos) || proyectos < 0 || proyectos > 5 || !Number.isInteger(proyectos)) {
+      errors.cantidadProyectosActivos = 'La cantidad de proyectos activos debe ser un entero entre 0 y 5.';
+    }
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -116,11 +122,16 @@ export const Consultores = () => {
 
     try {
       setIsSubmitting(true);
+      const payload = {
+        ...formData,
+        cantidadProyectosActivos: Number(formData.cantidadProyectosActivos),
+      };
+
       if (modalMode === 'create') {
-        await consultorService.crear(formData);
+        await consultorService.crear(payload);
         toastSuccess('Consultor creado exitosamente.');
       } else {
-        await consultorService.actualizar(formData.id, formData);
+        await consultorService.actualizar(payload.id, payload);
         toastSuccess('Consultor actualizado correctamente.');
       }
       setIsModalOpen(false);
@@ -388,6 +399,24 @@ export const Consultores = () => {
               error={formErrors.tarifaHora}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, tarifaHora: e.target.value }))
+              }
+            />
+
+            <Input
+              label="Proyectos Activos"
+              id="cantidadProyectosActivos"
+              name="cantidadProyectosActivos"
+              type="number"
+              step="1"
+              min="0"
+              max="5"
+              required
+              helperText="Rango: 0 - 5 proyectos activos"
+              placeholder="Ej: 2"
+              value={formData.cantidadProyectosActivos}
+              error={formErrors.cantidadProyectosActivos}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, cantidadProyectosActivos: e.target.value }))
               }
             />
           </div>

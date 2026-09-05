@@ -32,6 +32,7 @@ export const consultorService = {
       emailCorporativo: data.emailCorporativo,
       areaEspecializacion: data.areaEspecializacion,
       tarifaHora: Number(data.tarifaHora),
+      cantidadProyectosActivos: Number(data.cantidadProyectosActivos ?? 0),
     });
     return response.data;
   },
@@ -47,6 +48,7 @@ export const consultorService = {
       emailCorporativo: data.emailCorporativo,
       areaEspecializacion: data.areaEspecializacion,
       tarifaHora: Number(data.tarifaHora),
+      cantidadProyectosActivos: Number(data.cantidadProyectosActivos ?? 0),
       activo: Boolean(data.activo),
     });
     return response.data;

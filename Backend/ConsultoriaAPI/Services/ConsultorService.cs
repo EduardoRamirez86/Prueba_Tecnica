@@ -44,7 +44,7 @@ public sealed class ConsultorService : IConsultorService
     {
         var filasAfectadas = await _repository.ActualizarAsync(
             id, dto.NombreCompleto, dto.EmailCorporativo, dto.AreaEspecializacion,
-            dto.TarifaHora, dto.CantidadProyectosActivos, cancellationToken);
+            dto.TarifaHora, dto.CantidadProyectosActivos, dto.Activo, cancellationToken);
 
         if (filasAfectadas == 0)
             throw new KeyNotFoundException($"Consultor con Id {id} no encontrado o ya eliminado.");

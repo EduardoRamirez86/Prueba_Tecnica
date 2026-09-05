@@ -40,7 +40,7 @@ public sealed class PaqueteService : IPaqueteService
     public async Task ActualizarAsync(int id, ActualizarPaqueteDto dto, CancellationToken cancellationToken = default)
     {
         var filasAfectadas = await _repository.ActualizarAsync(
-            id, dto.Nombre, dto.Descripcion, dto.Area, dto.Precio, cancellationToken);
+            id, dto.Nombre, dto.Descripcion, dto.Area, dto.Precio, dto.Activo, cancellationToken);
 
         if (filasAfectadas == 0)
             throw new KeyNotFoundException($"Paquete con Id {id} no encontrado o ya eliminado.");

@@ -5,4 +5,5 @@ public sealed record ActualizarConsultorDto(
     string EmailCorporativo,
     string AreaEspecializacion,
     decimal TarifaHora,
-    int CantidadProyectosActivos);
+    int CantidadProyectosActivos,
+    bool Activo);

@@ -48,7 +48,7 @@ public sealed class PaqueteRepository : IPaqueteRepository
         return (int)(result?.Id ?? 0);
     }
 
-    public async Task<int> ActualizarAsync(int id, string nombre, string descripcion, string area, decimal precio, CancellationToken cancellationToken = default)
+    public async Task<int> ActualizarAsync(int id, string nombre, string descripcion, string area, decimal precio, bool activo, CancellationToken cancellationToken = default)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", id);
@@ -56,6 +56,7 @@ public sealed class PaqueteRepository : IPaqueteRepository
         parameters.Add("@Descripcion", descripcion);
         parameters.Add("@Area", area);
         parameters.Add("@Precio", precio);
+        parameters.Add("@Activo", activo);
 
         var result = await _db.QueryFirstOrDefaultAsync<dynamic>(
             "dbo.sp_ActualizarPaquete",

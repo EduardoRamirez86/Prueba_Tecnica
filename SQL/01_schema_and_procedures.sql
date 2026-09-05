@@ -112,7 +112,8 @@ CREATE OR ALTER PROCEDURE dbo.sp_ActualizarPaquete
     @Nombre NVARCHAR(150),
     @Descripcion NVARCHAR(500),
     @Area NVARCHAR(100),
-    @Precio DECIMAL(12,2)
+    @Precio DECIMAL(12,2),
+    @Activo BIT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -120,8 +121,9 @@ BEGIN
     SET Nombre = @Nombre,
         Descripcion = @Descripcion,
         Area = @Area,
-        Precio = @Precio
-    WHERE Id = @Id AND Activo = 1;
+        Precio = @Precio,
+        Activo = @Activo
+    WHERE Id = @Id;
 
     SELECT @@ROWCOUNT AS FilasAfectadas;
 END;
@@ -189,7 +191,8 @@ CREATE OR ALTER PROCEDURE dbo.sp_ActualizarConsultor
     @EmailCorporativo NVARCHAR(150),
     @AreaEspecializacion NVARCHAR(100),
     @TarifaHora DECIMAL(10,2),
-    @CantidadProyectosActivos INT
+    @CantidadProyectosActivos INT,
+    @Activo BIT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -198,8 +201,9 @@ BEGIN
         EmailCorporativo = @EmailCorporativo,
         AreaEspecializacion = @AreaEspecializacion,
         TarifaHora = @TarifaHora,
-        CantidadProyectosActivos = @CantidadProyectosActivos
-    WHERE Id = @Id AND Activo = 1;
+        CantidadProyectosActivos = @CantidadProyectosActivos,
+        Activo = @Activo
+    WHERE Id = @Id;
 
     SELECT @@ROWCOUNT AS FilasAfectadas;
 END;

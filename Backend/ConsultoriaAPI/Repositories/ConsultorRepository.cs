@@ -49,7 +49,7 @@ public sealed class ConsultorRepository : IConsultorRepository
         return (int)(result?.Id ?? 0);
     }
 
-    public async Task<int> ActualizarAsync(int id, string nombreCompleto, string emailCorporativo, string areaEspecializacion, decimal tarifaHora, int cantidadProyectosActivos, CancellationToken cancellationToken = default)
+    public async Task<int> ActualizarAsync(int id, string nombreCompleto, string emailCorporativo, string areaEspecializacion, decimal tarifaHora, int cantidadProyectosActivos, bool activo, CancellationToken cancellationToken = default)
     {
         var parameters = new DynamicParameters();
         parameters.Add("@Id", id);
@@ -58,6 +58,7 @@ public sealed class ConsultorRepository : IConsultorRepository
         parameters.Add("@AreaEspecializacion", areaEspecializacion);
         parameters.Add("@TarifaHora", tarifaHora);
         parameters.Add("@CantidadProyectosActivos", cantidadProyectosActivos);
+        parameters.Add("@Activo", activo);
 
         var result = await _db.QueryFirstOrDefaultAsync<dynamic>(
             "dbo.sp_ActualizarConsultor",
