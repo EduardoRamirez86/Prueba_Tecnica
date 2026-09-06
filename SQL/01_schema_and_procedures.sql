@@ -1,3 +1,8 @@
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'ConsultoriaDb')
+BEGIN
+    CREATE DATABASE ConsultoriaDb;
+END
+GO
 USE ConsultoriaDb;
 GO
 
@@ -55,7 +60,7 @@ GO
 -- 2. PROCEDIMIENTOS ALMACENADOS: USUARIOS Y AUTH
 -- ============================================================================
 
-CREATE OR ALTER PROCEDURE dbo.sp_ObtenerUsuarioPorEmail
+CREATE PROCEDURE dbo.sp_ObtenerUsuarioPorEmail
     @Email NVARCHAR(150)
 AS
 BEGIN
@@ -70,7 +75,7 @@ GO
 -- 3. PROCEDIMIENTOS ALMACENADOS: PAQUETES
 -- ============================================================================
 
-CREATE OR ALTER PROCEDURE dbo.sp_ListarPaquetes
+CREATE PROCEDURE dbo.sp_ListarPaquetes
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -81,7 +86,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_ObtenerPaquetePorId
+CREATE PROCEDURE dbo.sp_ObtenerPaquetePorId
     @Id INT
 AS
 BEGIN
@@ -92,7 +97,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_CrearPaquete
+CREATE PROCEDURE dbo.sp_CrearPaquete
     @Nombre NVARCHAR(150),
     @Descripcion NVARCHAR(500),
     @Area NVARCHAR(100),
@@ -107,7 +112,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_ActualizarPaquete
+CREATE PROCEDURE dbo.sp_ActualizarPaquete
     @Id INT,
     @Nombre NVARCHAR(150),
     @Descripcion NVARCHAR(500),
@@ -129,7 +134,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_EliminarPaquete
+CREATE PROCEDURE dbo.sp_EliminarPaquete
     @Id INT
 AS
 BEGIN
@@ -147,7 +152,7 @@ GO
 -- 4. PROCEDIMIENTOS ALMACENADOS: CONSULTORES
 -- ============================================================================
 
-CREATE OR ALTER PROCEDURE dbo.sp_ListarConsultores
+CREATE PROCEDURE dbo.sp_ListarConsultores
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -158,7 +163,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_ObtenerConsultorPorId
+CREATE PROCEDURE dbo.sp_ObtenerConsultorPorId
     @Id INT
 AS
 BEGIN
@@ -169,7 +174,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_CrearConsultor
+CREATE PROCEDURE dbo.sp_CrearConsultor
     @NombreCompleto NVARCHAR(150),
     @EmailCorporativo NVARCHAR(150),
     @AreaEspecializacion NVARCHAR(100),
@@ -185,7 +190,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_ActualizarConsultor
+CREATE PROCEDURE dbo.sp_ActualizarConsultor
     @Id INT,
     @NombreCompleto NVARCHAR(150),
     @EmailCorporativo NVARCHAR(150),
@@ -209,7 +214,7 @@ BEGIN
 END;
 GO
 
-CREATE OR ALTER PROCEDURE dbo.sp_EliminarConsultor
+CREATE PROCEDURE dbo.sp_EliminarConsultor
     @Id INT
 AS
 BEGIN
@@ -228,7 +233,7 @@ GO
 -- ============================================================================
 
 -- Reporte 1: Paquetes por Área (Resumen económico y conteo)
-CREATE OR ALTER PROCEDURE dbo.sp_ReportePaquetesPorArea
+CREATE PROCEDURE dbo.sp_ReportePaquetesPorArea
     @FiltroArea NVARCHAR(100) = NULL,
     @Page INT = 1,
     @PageSize INT = 10,
@@ -281,7 +286,7 @@ GO
 
 -- Reporte 2: Consultores Top Facturación
 -- Regla de negocio documentada: Facturación estimada mensual = (TarifaHora * 160 horas estándar) * (1 + (CantidadProyectosActivos * 0.10))
-CREATE OR ALTER PROCEDURE dbo.sp_ReporteConsultoresTopFacturacion
+CREATE PROCEDURE dbo.sp_ReporteConsultoresTopFacturacion
     @FiltroArea NVARCHAR(100) = NULL,
     @Page INT = 1,
     @PageSize INT = 10,

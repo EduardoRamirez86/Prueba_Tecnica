@@ -84,11 +84,11 @@ Ejecute los scripts en orden secuencial: primero `01_schema_and_procedures.sql`,
 ```bash
 # Autenticacion Windows (Trusted Connection)
 sqlcmd -S localhost -E -i SQL/01_schema_and_procedures.sql -C
-sqlcmd -S localhost -E -i SQL/02_seed_data.sql -C
+sqlcmd -S localhost -E -i SQL/02_seed_data.sql -C -f 65001
 
 # Autenticacion SQL (usuario y contrasena)
 sqlcmd -S localhost -U sa -P "TuPassword" -i SQL/01_schema_and_procedures.sql -C
-sqlcmd -S localhost -U sa -P "TuPassword" -i SQL/02_seed_data.sql -C
+sqlcmd -S localhost -U sa -P "TuPassword" -i SQL/02_seed_data.sql -C -f 65001
 ```
 
 ### Credenciales de Prueba
@@ -105,6 +105,12 @@ Las siguientes cuentas son insertadas por `02_seed_data.sql` con hashes BCrypt p
 ## 4. Configuracion y Ejecucion del Backend
 
 ### Cadena de Conexion
+
+Primero, copie la plantilla de configuracion:
+
+```bash
+cp Backend/ConsultoriaAPI/appsettings.Example.json Backend/ConsultoriaAPI/appsettings.Development.json
+```
 
 Edite el archivo `Backend/ConsultoriaAPI/appsettings.Development.json` y reemplace la seccion `ConnectionStrings` con la opcion que corresponda a su entorno:
 
