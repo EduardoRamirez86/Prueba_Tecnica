@@ -64,6 +64,16 @@ export const Paquetes = () => {
     );
   }, [paquetes, searchTerm]);
 
+  // Paginación en cliente
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 8;
+  const totalPages = Math.max(1, Math.ceil(filteredPaquetes.length / pageSize));
+  
+  const paginatedPaquetes = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredPaquetes.slice(startIndex, startIndex + pageSize);
+  }, [filteredPaquetes, currentPage]);
+
   // Modal Crear
   const handleOpenCreateModal = () => {
     setModalMode('create');
@@ -161,7 +171,10 @@ export const Paquetes = () => {
             placeholder="Buscar paquete por nombre, área o descripción..."
             icon={Search}
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setCurrentPage(1);
+            }}
           />
         </div>
 
@@ -222,7 +235,7 @@ export const Paquetes = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-sm">
-                {filteredPaquetes.map((p) => (
+                {paginatedPaquetes.map((p) => (
                   <tr
                     key={p.id}
                     className="hover:bg-slate-50/60 transition-colors"
@@ -282,6 +295,38 @@ export const Paquetes = () => {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Paginación Cliente */}
+        {!isLoading && filteredPaquetes.length > 0 && (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-6 py-3.5 border-t border-slate-100 bg-slate-50/50 text-xs text-slate-500">
+            <span>
+              Página <strong className="text-slate-900">{currentPage}</strong> de{' '}
+              <strong className="text-slate-900">{totalPages}</strong> (Total:{' '}
+              {filteredPaquetes.length} registros)
+            </span>
+
+            <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={currentPage <= 1}
+                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                className="flex-1 sm:flex-initial"
+              >
+                Anterior
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                disabled={currentPage >= totalPages}
+                onClick={() => setCurrentPage(prev => prev + 1)}
+                className="flex-1 sm:flex-initial"
+              >
+                Siguiente
+              </Button>
+            </div>
           </div>
         )}
       </div>
