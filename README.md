@@ -297,3 +297,13 @@ Prueba_Tecnica/
 │   └── ConsultoriaAPI.postman_collection.json
 └── README.md
 ```
+
+### Arquitectura y Flujo de Datos
+
+```mermaid
+graph TD
+    Client["React SPA (Vite)"] -->|"HTTP / JSON (Bearer JWT)"| Controller["API Controllers"]
+    Controller -->|"DTOs inmutables + FluentValidation"| Service["Business Services"]
+    Service -->|"CancellationToken + Parámetros"| Repository["Dapper Repositories"]
+    Repository -->|"Stored Procedures"| DB[("SQL Server")]
+```
